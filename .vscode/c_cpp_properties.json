@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**"
             ],
-            "defines": []
+            "defines": [],
+            "compilerPath": "/usr/bin/g++"
         }
     ],
     "version": 4
