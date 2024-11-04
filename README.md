@@ -1,1 +1,1 @@
-test cpp day 3
+Learning C++, Python and other programming languages
