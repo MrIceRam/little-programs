@@ -1,6 +1,7 @@
 import random
 
-file = open('RandomNUM', 'w')
-file.write(str(random.randint(1, 20)))
+file = open('RandomNUM.txt', 'w')
+i = str(random.randint(1, 20))
+file.write(i)
 
-# print(str(random.randint(1,20)))
+print("Python mum: ", i)
