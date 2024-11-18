@@ -5,7 +5,8 @@
 int main(){
     setlocale(LC_ALL, "ru");
 
-    system("python3 Randompy.py");
+   // system("python3 Randompy.py");
+    system("Randompy.py");
 
     int i;
     std::ifstream read("RandomNUM.txt", std::ios::out);
