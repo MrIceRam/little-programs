@@ -1,6 +1,6 @@
 import random
 
-file = open('fileRandom/RandomNUM.txt', 'w')
+file = open('RandomNUM.txt', 'w')
 i = str(random.randint(1, 20))
 file.write(i)
 

@@ -6,6 +6,7 @@ int main(){
     setlocale(LC_ALL, "ru");
 
    // system("python3 Randompy.py");
+   // OR \|/
     system("Randompy.py");
 
     int i;

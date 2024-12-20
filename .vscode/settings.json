@@ -48,6 +48,11 @@
         "typeinfo": "cpp",
         "random number": "cpp",
         "ctime": "cpp",
-        "fstream": "cpp"
+        "fstream": "cpp",
+        "charconv": "cpp",
+        "format": "cpp",
+        "span": "cpp",
+        "text_encoding": "cpp",
+        "variant": "cpp"
     }
 }
