@@ -1,0 +1,4 @@
+﻿  Hanoi Towers.cpp
+D:\it\Hanoi Towers\Hanoi Towers.cpp(12,17): warning C4838: Преобразование из "int" в "SHORT" требует сужающего преобразования.
+D:\it\Hanoi Towers\Hanoi Towers.cpp(12,20): warning C4838: Преобразование из "int" в "SHORT" требует сужающего преобразования.
+  Hanoi Towers.vcxproj -> D:\it\Hanoi Towers\x64\Debug\Hanoi Towers.exe

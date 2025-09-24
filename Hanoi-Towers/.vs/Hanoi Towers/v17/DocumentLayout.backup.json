@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\it\\Hanoi Towers\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F206DACE-B710-439A-A2E3-4829E4ABC2E8}|Hanoi Towers.vcxproj|D:\\it\\Hanoi Towers\\Hanoi Towers.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F206DACE-B710-439A-A2E3-4829E4ABC2E8}|Hanoi Towers.vcxproj|solutionrelative:Hanoi Towers.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Hanoi Towers.cpp",
+              "DocumentMoniker": "D:\\it\\Hanoi Towers\\Hanoi Towers.cpp",
+              "RelativeDocumentMoniker": "Hanoi Towers.cpp",
+              "ToolTip": "D:\\it\\Hanoi Towers\\Hanoi Towers.cpp*",
+              "RelativeToolTip": "Hanoi Towers.cpp*",
+              "ViewState": "AgIAACsAAAAAAAAAAAAswEIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-05-06T13:06:05.734Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
