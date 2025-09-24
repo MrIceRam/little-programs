@@ -1,0 +1,4 @@
+﻿  tetris.cpp
+D:\it\tetris\tetris\tetris\tetris.cpp(8,14): warning C4838: Преобразование из "int" в "SHORT" требует сужающего преобразования.
+D:\it\tetris\tetris\tetris\tetris.cpp(8,17): warning C4838: Преобразование из "int" в "SHORT" требует сужающего преобразования.
+  tetris.vcxproj -> D:\it\tetris\tetris\x64\Debug\tetris.exe
