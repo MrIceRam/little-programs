@@ -6,4 +6,4 @@ print(os.listdir(path="..")) #директории
 x = os.listdir(path="..")
 print(x[0])
 
-os.system("tree") #cmd
+#os.system("tree") #cmd
