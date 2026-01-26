@@ -1,43 +1,42 @@
-# Source - https://stackoverflow.com/a
-# Posted by Bryan Oakley
-# Retrieved 2026-01-26, License - CC BY-SA 3.0
+from tkinter import *
+import random
 
-import tkinter as tk
 
-class Example(tk.Frame):
-    def __init__(self, parent):
-        tk.Frame.__init__(self, parent)
+def random_color():
+    # Generate a random integer between 0 and 0xFFFFFF (16777215)
+    # and format it as a 6-digit hex string with a '#' prefix
+    return f"#{random.randint(0, 0xFFFFFF):06x}"
 
-        # create a prompt, an input box, an output label,
-        # and a button to do the computation
-        self.prompt = tk.Label(self, text="Enter a number:", anchor="w")
-        self.entry = tk.Entry(self)
-        self.submit = tk.Button(self, text="Submit", command = self.calculate)
-        self.output = tk.Label(self, text="")
 
-        # lay the widgets out on the screen. 
-        self.prompt.pack(side="top", fill="x")
-        self.entry.pack(side="top", fill="x", padx=20)
-        self.output.pack(side="top", fill="x", expand=True)
-        self.submit.pack(side="right")
+root = Tk() # Tk.mainloop dont work
+root.title("test")
+root.geometry('700x500')
+root.resizable(width=False, height=False) # запрещяет менять размер окна чибоксару
+root.iconbitmap('./ice.ico')
+root['bg']='#D8BFD8' #root.config(bg='blue')  # Thistle
 
-    def calculate(self):
-        # get the value from the input widget, convert
-        # it to an int, and do a calculation
-        try:
-            i = int(self.entry.get())
-            result = "%s*2=%s" % (i, i*2)
-        except ValueError:
-            result = "Please enter digits only"
+def FirstButton():
+    root['bg']=str(random_color())
+    print("firs button")
 
-        # set the output widget to have our result
-        self.output.configure(text=result)
+label = Label(root,
+              text="IceRam",
+              font=("Arial",70,"bold"))
 
-# if this is run as a program (versus being imported),
-# create a root window and an instance of our example,
-# then start the event loop
+btn = Button(root,  #width=10,height=10
+             text="kill", #text
+             command=FirstButton, #def
+             font=("Arial", 50), #шрифт и размер
+             bg = str(random_color()), #bg
+             activebackground="blue", # bg когда ты нажимаешь кнопку
+             activeforeground=str(random_color()),
+             fg=str(random_color()), # цвет текста
+             ) 
+label.pack()
+btn.pack()
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    Example(root).pack(fill="both", expand=True)
-    root.mainloop()
+
+
+
+
+root.mainloop()
