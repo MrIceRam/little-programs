@@ -1,11 +1,15 @@
 from tkinter import *
 import random
+import os
 
+with open('./logs.txt.txt', 'w', encoding='utf-8'):
+    pass  # Файл создается/очищается автоматически
 
 def random_color():
     # Generate a random integer between 0 and 0xFFFFFF (16777215)
     # and format it as a 6-digit hex string with a '#' prefix
     return f"#{random.randint(0, 0xFFFFFF):06x}"
+
 
 
 root = Tk() # Tk.mainloop dont work
@@ -16,8 +20,17 @@ root.iconbitmap('./ice.ico')
 root['bg']='#D8BFD8' #root.config(bg='blue')  # Thistle
 
 def FirstButton():
+    print("----====########====----")
     root['bg']=str(random_color())
     print("firs button")
+
+    fd = os.open('./logs.txt.txt', os.O_RDWR | os.O_CREAT | os.O_APPEND) #"a+" \|/ a+ dont working i dk
+    os.write(fd, "23\n".encode('utf-8'))
+    os.close(fd)
+
+    with open('./logs.txt.txt', 'r', encoding='utf-8') as f:
+        content = f.read()  # Вся строка
+        print(f"Весь файл:\n{content}")
 
 label = Label(root,
               text="IceRam",
