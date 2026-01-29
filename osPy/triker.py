@@ -2,15 +2,13 @@ from tkinter import *
 import random
 import os
 
-with open('./logs.txt.txt', 'w', encoding='utf-8'):
+with open('./logs.txt', 'w', encoding='utf-8'):
     pass  # Файл создается/очищается автоматически
 
 def random_color():
     # Generate a random integer between 0 and 0xFFFFFF (16777215)
     # and format it as a 6-digit hex string with a '#' prefix
     return f"#{random.randint(0, 0xFFFFFF):06x}"
-
-
 
 root = Tk() # Tk.mainloop dont work
 root.title("test")
@@ -24,11 +22,11 @@ def FirstButton():
     root['bg']=str(random_color())
     print("firs button")
 
-    fd = os.open('./logs.txt.txt', os.O_RDWR | os.O_CREAT | os.O_APPEND) #"a+" \|/ a+ dont working i dk
+    fd = os.open('./logs.txt', os.O_RDWR | os.O_CREAT | os.O_APPEND) #"a+" \|/ a+ dont working i dk
     os.write(fd, "23\n".encode('utf-8'))
     os.close(fd)
 
-    with open('./logs.txt.txt', 'r', encoding='utf-8') as f:
+    with open('./logs.txt', 'r', encoding='utf-8') as f:
         content = f.read()  # Вся строка
         print(f"Весь файл:\n{content}")
 
@@ -45,11 +43,14 @@ btn = Button(root,  #width=10,height=10
              activeforeground=str(random_color()),
              fg=str(random_color()), # цвет текста
              ) 
+
+img = PhotoImage(file=".\logo.png") #D:\it\little-programs\osPy\logo.png
+l_logo = Label(root, image=img)
+
+
 label.pack()
 btn.pack()
-
-
-
+l_logo.pack()
 
 
 root.mainloop()
