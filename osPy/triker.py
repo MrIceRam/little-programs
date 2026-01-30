@@ -23,7 +23,8 @@ def FirstButton():
     print("firs button")
 
     fd = os.open('./logs.txt', os.O_RDWR | os.O_CREAT | os.O_APPEND) #"a+" \|/ a+ dont working i dk
-    os.write(fd, "23\n".encode('utf-8'))
+    RandomNum = str(random.randint(0,20))+"\n"
+    os.write(fd, RandomNum.encode('utf-8'))
     os.close(fd)
 
     with open('./logs.txt', 'r', encoding='utf-8') as f:
@@ -31,7 +32,7 @@ def FirstButton():
         print(f"Весь файл:\n{content}")
 
 label = Label(root,
-              text="IceRam",
+              text="test",
               font=("Arial",70,"bold"))
 
 btn = Button(root,  #width=10,height=10
@@ -45,7 +46,9 @@ btn = Button(root,  #width=10,height=10
              ) 
 
 img = PhotoImage(file=".\logo.png") #D:\it\little-programs\osPy\logo.png
-l_logo = Label(root, image=img)
+l_logo = Label(root, 
+               image=img,
+               )
 
 
 label.pack()

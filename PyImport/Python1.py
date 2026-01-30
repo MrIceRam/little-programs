@@ -1,11 +1,3 @@
-# file = open("PyImport/num.txt", "r")
-# content = file.read()
-# print(content)
-# print(int(content) + 1)
-# x = input()
-
-
-
-# file = open("example.txt", "w")
-# file.write("Hello, World!")
-# file.close()
+import Python2
+x = int(input())
+print(Python2.lol(x))
