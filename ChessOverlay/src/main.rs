@@ -4,9 +4,10 @@ use std::sync::atomic::{AtomicI32, Ordering};
 use winit::application::ApplicationHandler;
 use winit::event::WindowEvent;
 use winit::event_loop::{ActiveEventLoop, EventLoop};
-use winit::window::{Window, WindowId, WindowLevel};
+use winit::window::{Icon, Window, WindowId, WindowLevel};
 use winit::raw_window_handle::{HasWindowHandle, RawWindowHandle};
 use winit::dpi::LogicalSize as WinitLogicalSize;
+use winit::platform::windows::WindowAttributesExtWindows;
 
 use windows::Win32::Foundation::{COLORREF, HWND, LPARAM, LRESULT, POINT, RECT, WPARAM};
 use windows::Win32::System::LibraryLoader::GetModuleHandleW;
@@ -46,6 +47,11 @@ const TRANSPARENT_SCRIPT: &str = r#"
             background: transparent !important;
             background-color: transparent !important;
         }
+        ::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        }
     `;
     function apply() {
         if (!document.head && !document.documentElement) return;
@@ -64,6 +70,14 @@ const TRANSPARENT_SCRIPT: &str = r#"
     observer.observe(document.documentElement, { childList: true, subtree: true });
 })();
 "#;
+
+/// Загружает .ico в Icon winit через крейт image.
+fn load_icon(bytes: &[u8]) -> Icon {
+    let img = image::load_from_memory(bytes).expect("Не удалось декодировать иконку");
+    let rgba = img.to_rgba8();
+    let (w, h) = rgba.dimensions();
+    Icon::from_rgba(rgba.into_raw(), w, h).expect("Не удалось создать Icon")
+}
 
 fn is_key_down(vk: i32) -> bool {
     unsafe { (GetAsyncKeyState(vk) as u16 & 0x8000) != 0 }
@@ -88,8 +102,6 @@ fn get_cursor_pos() -> (i32, i32) {
     }
 }
 
-/// Обход блокировки SetForegroundWindow: цепляемся к потоку активного окна.
-/// Плюс временно снимаем topmost — так Windows разрешает активацию.
 unsafe fn force_foreground(hwnd: HWND) {
     let _ = SetWindowPos(
         hwnd,
@@ -169,6 +181,11 @@ impl App {
 
 impl ApplicationHandler for App {
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
+        // Иконка лежит в data/ico.ico. Путь относительный от src/main.rs:
+        // ../ = выйти из src/ в корень ChessOverlay/
+        // data/ico.ico = зайти в data/ и взять файл
+        let icon = load_icon(include_bytes!("../data/ico.ico"));
+
         let window = Arc::new(
             event_loop
                 .create_window(
@@ -178,7 +195,9 @@ impl ApplicationHandler for App {
                         .with_transparent(true)
                         .with_decorations(false)
                         .with_visible(true)
-                        .with_window_level(WindowLevel::AlwaysOnTop),
+                        .with_window_level(WindowLevel::AlwaysOnTop)
+                        .with_window_icon(Some(icon.clone()))
+                        .with_taskbar_icon(Some(icon)),
                 )
                 .expect("Не удалось создать окно"),
         );
@@ -260,8 +279,6 @@ impl ApplicationHandler for App {
         let RawWindowHandle::Win32(h) = handle.as_raw() else { return };
         let hwnd = HWND(h.hwnd.get() as *mut _);
 
-        // === Пинок для WebView2: minimize+restore заставляет его
-        // пересоздать composition surface и включить прозрачность.
         self.frame_counter += 1;
 
         if self.frame_counter == 180 {
@@ -319,7 +336,6 @@ impl ApplicationHandler for App {
                 let interactive = caps && !shift;
                 let drag = caps && shift;
 
-                // --- Переключение interactive / click-through ---
                 if interactive != self.caps_prev_interactive {
                     unsafe {
                         let ex = GetWindowLongPtrW(hwnd, GWL_EXSTYLE);
@@ -328,8 +344,6 @@ impl ApplicationHandler for App {
                         let lay = WS_EX_LAYERED.0 as isize;
 
                         let new_ex = if interactive {
-                            // Снимаем ВСЕ три флага — иначе клики не пробрасываются
-                            // в дочернее окно WebView2.
                             ((ex & !tr) & !na) & !lay
                         } else {
                             ex | tr | na | lay
@@ -347,7 +361,6 @@ impl ApplicationHandler for App {
                             let _ = ShowWindow(hwnd, SW_SHOW);
                             force_foreground(hwnd);
                         } else {
-                            // WS_EX_LAYERED переустановили — нужно заново задать альфу.
                             let _ = SetLayeredWindowAttributes(
                                 hwnd, COLORREF(0), 255, LWA_ALPHA,
                             );
@@ -362,7 +375,6 @@ impl ApplicationHandler for App {
                     self.caps_prev_interactive = interactive;
                 }
 
-                // --- Drag + resize ---
                 if drag {
                     RESIZE_MODE.store(1, Ordering::Relaxed);
 
