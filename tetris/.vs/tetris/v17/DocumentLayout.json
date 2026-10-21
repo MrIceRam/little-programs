@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\it\\tetris\\",
+  "WorkspaceRootPath": "D:\\Programs\\IT\\little-programs\\tetris\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\it\\tetris\\tetris.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Programs\\IT\\little-programs\\tetris\\tetris.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:tetris.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -20,14 +20,16 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "tetris.cpp",
-              "DocumentMoniker": "D:\\it\\tetris\\tetris.cpp",
+              "DocumentMoniker": "D:\\Programs\\IT\\little-programs\\tetris\\tetris.cpp",
               "RelativeDocumentMoniker": "tetris.cpp",
-              "ToolTip": "D:\\it\\tetris\\tetris.cpp",
+              "ToolTip": "D:\\Programs\\IT\\little-programs\\tetris\\tetris.cpp",
               "RelativeToolTip": "tetris.cpp",
-              "ViewState": "AgIAALQAAAAAAAAAAAAAAIYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-04-04T19:55:02.778Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-04T19:55:02.778Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
