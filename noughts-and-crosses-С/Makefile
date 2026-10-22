@@ -24,19 +24,18 @@ BUILD_DIR = build
 NAME      = tictactoe
 
 # ------------------------- Различия Windows / Linux ----------------------
+# Под MSYS2 make использует свою оболочку sh, поэтому команды и так Unix-вида.
+# SHELL = cmd.exe здесь ставить НЕЛЬЗЯ.
 
 ifeq ($(OS),Windows_NT)
-    SHELL   = cmd.exe
-    EXE     = .exe
-    MKDIR   = if not exist $(BUILD_DIR) mkdir $(BUILD_DIR)
-    RMDIR   = if exist $(BUILD_DIR) rmdir /s /q $(BUILD_DIR)
-    FIXPATH = $(subst /,\,$1)
+    EXE = .exe
 else
-    EXE     =
-    MKDIR   = mkdir -p $(BUILD_DIR)
-    RMDIR   = rm -rf $(BUILD_DIR)
-    FIXPATH = $1
+    EXE =
 endif
+
+MKDIR   = mkdir -p $(BUILD_DIR)
+RMDIR   = rm -rf $(BUILD_DIR)
+FIXPATH = $1
 
 # ----------------------------- Файлы -------------------------------------
 
