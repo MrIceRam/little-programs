@@ -3,6 +3,7 @@
 #   make          собрать программу (то же, что make all)
 #   make run      собрать и запустить
 #   make debug    собрать с отладочной информацией (для gdb)
+#   make test     собрать и запустить тесты (фреймворк Unity)
 #   make clean    удалить всё собранное (папку build)
 #
 # Правило в Makefile выглядит так:
@@ -20,6 +21,8 @@ CFLAGS  = -Wall -Wextra -std=c11 -O2
 LDFLAGS =
 
 SRC_DIR   = src
+TEST_DIR  = test
+UNITY_DIR = $(TEST_DIR)/unity
 BUILD_DIR = build
 NAME      = tictactoe
 
@@ -47,6 +50,13 @@ OBJS   = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 DEPS   = $(OBJS:.o=.d)
 TARGET = $(BUILD_DIR)/$(NAME)$(EXE)
 
+# Для тестов нужны все .o, кроме того, где лежит main() программы
+GAME_OBJS   = $(filter-out $(BUILD_DIR)/$(NAME).o,$(OBJS))
+TEST_SRCS   = $(wildcard $(TEST_DIR)/*.c)
+TEST_OBJS   = $(patsubst $(TEST_DIR)/%.c,$(BUILD_DIR)/test/%.o,$(TEST_SRCS))               $(BUILD_DIR)/test/unity.o
+TEST_TARGET = $(BUILD_DIR)/test_$(NAME)$(EXE)
+DEPS       += $(TEST_OBJS:.o=.d)
+
 # ----------------------------- Правила -----------------------------------
 
 # Первая цель в файле — цель по умолчанию (просто "make")
@@ -67,6 +77,26 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 $(BUILD_DIR):
 	$(MKDIR)
 
+# ----------------------------- Тесты -------------------------------------
+
+# Тесты: test/X.c и unity.c -> build/test/X.o, затем вместе с логикой игры
+# в один build/test_tictactoe.exe. -I — где искать game.h и unity.h
+$(TEST_TARGET): $(TEST_OBJS) $(GAME_OBJS)
+	$(CC) $^ -o $@ $(LDFLAGS)
+
+$(BUILD_DIR)/test/%.o: $(TEST_DIR)/%.c | $(BUILD_DIR)/test
+	$(CC) $(CFLAGS) -I$(SRC_DIR) -I$(UNITY_DIR) -MMD -MP -c $< -o $@
+
+$(BUILD_DIR)/test/unity.o: $(UNITY_DIR)/unity.c | $(BUILD_DIR)/test
+	$(CC) $(CFLAGS) -I$(UNITY_DIR) -MMD -MP -c $< -o $@
+
+$(BUILD_DIR)/test:
+	mkdir -p $@
+
+# Exe возвращает число упавших тестов, поэтому make сам сообщит об ошибке
+test: $(TEST_TARGET)
+	$(call FIXPATH,$(TEST_TARGET))
+
 run: all
 	$(call FIXPATH,$(TARGET))
 
@@ -78,7 +108,7 @@ clean:
 	$(RMDIR)
 
 # Эти цели — не файлы, а просто имена команд
-.PHONY: all run debug clean
+.PHONY: all run debug clean test
 
 # Подключить .d-файлы (минус = не ругаться, если их ещё нет)
 -include $(DEPS)
